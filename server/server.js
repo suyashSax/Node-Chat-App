@@ -17,14 +17,14 @@ io.on('connection', (socket) => {
 
     // no callback for server side event creation, pass data
 
-    socket.emit('newMessage', {
-        from: "Suyash",
-        text: "wassup",
-        createdAt: 123535
-    })
+    socket.on('send', (message) => {
+        console.log("send", message)
 
-    socket.on('createMessage', (message) => {
-        console.log("createMessage", message)
+        io.emit('receive', {
+            from: message.from,
+            text: message.text,
+            createdAt: new Date().getTime()
+        })
     })
 
     socket.on('disconnect', () => {
