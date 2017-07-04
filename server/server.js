@@ -22,13 +22,13 @@ io.on('connection', (socket) => {
 
     // no callback for server side event creation, pass data
 
-    socket.on('send', (message) => {
+    socket.on('send', (message, callback) => {
         console.log("send", message)
-
         io.emit('receive', generateMessage(message.from, message.text))
+        callback('This is from server')
 
         // broadcast: emit to everyone but yourself
-
+        
         // socket.broadcast.emit('receive', {
         //     from: message.from,
         //     text: message.text,
