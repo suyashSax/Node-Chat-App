@@ -3,7 +3,7 @@ const http = require('http')
 const express = require('express')
 const socketIO = require('socket.io')
 
-const {generateMessage} = require('./utils/message')
+const {generateMessage, generateLocationMessage} = require('./utils/message')
 const publicPath = path.join(__dirname, '../public')
 const port = process.env.PORT || 3000
 
@@ -26,14 +26,10 @@ io.on('connection', (socket) => {
         console.log("send", message)
         io.emit('receive', generateMessage(message.from, message.text))
         callback('This is from server')
+    })
 
-        // broadcast: emit to everyone but yourself
-        
-        // socket.broadcast.emit('receive', {
-        //     from: message.from,
-        //     text: message.text,
-        //     createdAt: new Date().getTime()
-        // })
+    socket.on('sendLocation', (coords) => {
+        io.emit('receiveLocation', generateLocationMessage('Admin', coords.lat, coords.lon))
     })
 
     socket.on('disconnect', () => {
