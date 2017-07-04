@@ -15,6 +15,18 @@ app.use(express.static(publicPath))
 io.on('connection', (socket) => {
     console.log('New user connected')
 
+    // no callback for server side event creation, pass data
+
+    socket.emit('newMessage', {
+        from: "Suyash",
+        text: "wassup",
+        createdAt: 123535
+    })
+
+    socket.on('createMessage', (message) => {
+        console.log("createMessage", message)
+    })
+
     socket.on('disconnect', () => {
         console.log('User was disconnected')
     })
