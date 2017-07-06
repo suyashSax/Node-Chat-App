@@ -36,7 +36,11 @@ socket.on('disconnect', function () {
 })
 
 socket.on('updateUsers', function (users) {
-    console.log('Users:', users)
+    var ol = jQuery('<ol></ol>')
+    users.forEach(function (user){
+        ol.append(jQuery('<li></li').text(user))
+    })
+    jQuery('#users').html(ol)
 })
 
 // Client side listener
