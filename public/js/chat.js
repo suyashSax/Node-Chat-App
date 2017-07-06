@@ -35,6 +35,10 @@ socket.on('disconnect', function () {
     console.log('Disconncted from Server')
 })
 
+socket.on('updateUsers', function (users) {
+    console.log('Users:', users)
+})
+
 // Client side listener
 
 socket.on('receive', function (message) {
