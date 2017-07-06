@@ -51,7 +51,10 @@ io.on('connection', (socket) => {
     })
 
     socket.on('sendLocation', (coords) => {
-        io.emit('receiveLocation', generateLocationMessage('Admin', coords.lat, coords.lon))
+        var user = users.getUser(socket.id)
+        if(user){
+            io.to(user.room).emit('receiveLocation', generateLocationMessage(user.name, coords.lat, coords.lon))
+        }
     })
 
     socket.on('disconnect', () => {
