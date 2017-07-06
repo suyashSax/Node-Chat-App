@@ -86,7 +86,6 @@ jQuery('#message-form').on('submit', function (e) {
     // }
 
     socket.emit('send', {
-        from: 'User',
         text: messageBox.val()
     }, function () {
         messageBox.val('')

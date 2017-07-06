@@ -43,8 +43,10 @@ io.on('connection', (socket) => {
     })
 
     socket.on('send', (message, callback) => {
-        console.log("send", message)
-        io.emit('receive', generateMessage(message.from, message.text))
+        var user = users.getUser(socket.id)
+        if(user && isRealString(message.text)){
+            io.to(user.room).emit('receive', generateMessage(user.name, message.text))
+        }
         callback()
     })
 
